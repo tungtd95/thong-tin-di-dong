@@ -85,7 +85,8 @@ public class DBHelper {
         int status = -1;
         Statement statement;
         ResultSet resultSet;
-        String query = "";
+        String query = "SELECT * FROM `thong-tin-di-dong`.device "
+                + "where device.device_imei='"+mDevice.getDeviceIMEI()+"';";
         
         return status;
     }
