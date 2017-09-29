@@ -12,6 +12,7 @@ package model;
 public class User {
     String userName;
     String password;
+    int user_id;
     public User() {
         userName = "";
         password = "";
@@ -28,4 +29,13 @@ public class User {
     public String getPassword() {
         return this.password;
     }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+    
 }

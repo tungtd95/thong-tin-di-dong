@@ -62,6 +62,7 @@ public class DBHelper {
                 String password = resultSet.getString("user_password");
                 if (mUser.getPassword().equals(password)) {
                     status = 1;
+                    mUser.setUser_id(resultSet.getInt("user_id"));
                 } else {
                     status = 0;
                 }
@@ -80,13 +81,54 @@ public class DBHelper {
     *status of device:
     *    0: not add yet
     *    1: existed
+    *    2: error database
     */
     public int checkDevice() {
-        int status = -1;
+        int status = 0;
         Statement statement;
         ResultSet resultSet;
         String query = "SELECT * FROM `thong-tin-di-dong`.device "
                 + "where device.device_imei='"+mDevice.getDeviceIMEI()+"';";
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);
+            if (resultSet.next()) {
+                status = 1;
+            }
+        } catch (SQLException ex) {
+            status = 2;
+            Logger.getLogger(DBHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return status;
+    }
+    
+    public int addData() {
+        int status = 0;
+        if(checkDevice()==0) {
+            //device is not added yet, add device
+            String query = "INSERT INTO `thong-tin-di-dong`.`device` "
+                    + "(`device_imei`, `device_name`, `user_id`) "
+                    + "VALUES ('"+mDevice.getDeviceIMEI()+"', '"+mDevice.getDeviceName()+"', '"+mUser.getUser_id()+"');";
+            try {
+                Statement statement = connection.createStatement();
+                statement.execute(query);
+            } catch (SQLException ex) {
+                Logger.getLogger(DBHelper.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        String query = "INSERT INTO `thong-tin-di-dong`.`data` "
+                + "(`data_humid`, `data_temp`, `data_time`, `data_coordi`, "
+                + "`data_pin`, `data_pressure`, `device_imei`) "
+                + "VALUES ('"+mData.getHumidity()+"', '"+mData.getTemperature()+"', '"
+                + ""+mData.getTime()+"', '"+mData.getCoordinate()+"', "
+                + "'"+mData.getPin()+"', '"+mData.getPressure()+"', '"+mDevice.getDeviceIMEI()+"');";
+        try {
+            Statement statement = connection.createStatement();
+            statement.execute(query);
+            status = 1;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         return status;
     }

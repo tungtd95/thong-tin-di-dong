@@ -32,7 +32,7 @@ public class check extends HttpServlet {
             out.println("<link rel=\"stylesheet\" href=\"common.css\">");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1><a href=\"index.html\">Back to home</a></h1>");
+            out.println("<a href=\"index.html\"><h1>Back to home</h1></a>");
             out.println("</body>");
             out.println("</html>");
         }
