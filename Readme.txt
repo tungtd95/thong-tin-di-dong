@@ -1,8 +1,9 @@
-Bài tập lớn thông tin di động kỳ 20171 nhóm 5
+﻿Bài tập lớn thông tin di động kỳ 20171 nhóm 5
 - client: C# (Mạnh thực hiện)
 - server: Java EE (Tùng thực hiện)
 - database: MySQL (Mạnh, Tùng, Đạt thực hiện)
 - website: HTML, CSS, JavaScript (Phúc, Đạt, Hải bàn với nhau để làm)
+- viết báo cáo và slide: 2 người làm ít việc nhất trong các nhiệm vụ trên sẽ làm
 
 
 Yêu cầu chức năng:
