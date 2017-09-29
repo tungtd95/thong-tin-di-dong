@@ -26,6 +26,8 @@ public class add extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DBHelper dbHelper = new DBHelper();
+        int user_status;
+        int data_status = -1;
         
         String userName = request.getParameter("userName");
         String userPassword = request.getParameter("userPassword");
@@ -56,7 +58,14 @@ public class add extends HttpServlet {
                 .setTime(time);
         dbHelper.setmData(data);
         
+        user_status = dbHelper.checkUser();
         
+        
+        
+        PrintWriter echo = response.getWriter();
+        String content = "{\"user status\":" + user_status+","
+                + "\"data status\":"+data_status+"}";
+        echo.println(content);
     }
 
     @Override

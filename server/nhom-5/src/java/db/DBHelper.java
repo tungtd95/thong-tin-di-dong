@@ -75,6 +75,20 @@ public class DBHelper {
         
         return status;
     }
+    
+    /*
+    *status of device:
+    *    0: not add yet
+    *    1: existed
+    */
+    public int checkDevice() {
+        int status = -1;
+        Statement statement;
+        ResultSet resultSet;
+        String query = "";
+        
+        return status;
+    }
 
     public User getmUser() {
         return mUser;
@@ -100,5 +114,11 @@ public class DBHelper {
         this.mData = mData;
     }
     
-    
+    public void finish() {
+        try {
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
