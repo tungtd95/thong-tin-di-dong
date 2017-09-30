@@ -21,45 +21,56 @@ import model.User;
  * @author tung
  */
 public class DBHelper {
+
     Connection connection;
     User mUser;
     Device mDevice;
     Data mData;
+
+//      ONLINE DATABASE
+//    String mHostDatabase = "sql12.freemysqlhosting.net";
+//    String mSchemaDatabase = "sql12197053";
+//    String mUserDatabase = "sql12197053";
+//    String mPasswordDatabase = "WrXjqV3NeJ";
+//    String mPortDatabase = "3306";
     
-    String host = "sql12.freemysqlhosting.net";
-    String database = "sql12197053";
-    String user = "sql12197053";
-    String password = "WrXjqV3NeJ";
-    String port = "3306";
+//      OFFLINE DATABASE
+    String mHostDatabase = "localhost";
+    String mSchemaDatabase = "thong-tin-di-dong";
+    String mUserDatabase = "root";
+    String mPasswordDatabase = "Javafirst";
+    String mPortDatabase = "3307";
+
+
     /*
     * create connection to database
-    */
+     */
     public DBHelper() {
-        try { 
+        try {
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://"+host+":"
-                    + ""+port+"/"+database+"?useSSL=false", user, password ); 
+            connection = DriverManager.getConnection("jdbc:mysql://" + mHostDatabase + ":"
+                    + "" + mPortDatabase + "/" + mSchemaDatabase + "?useSSL=false", mUserDatabase, mPasswordDatabase);
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DBHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
+
     /*
     *status of checkUser method
     *   -1: not sign in
     *    0: signed in but password does not match
     *    1: password matched and checkUser success
     *    2: database connection error
-    */
+     */
     public int checkUser() {
         int status;
         Statement statement;
         ResultSet resultSet;
-        
-        String query = "SELECT * FROM `"+database+"`.user "
-                + "where user.user_name='"+mUser.getUserName()+"';";
-        
+
+        String query = "SELECT * FROM `" + mSchemaDatabase + "`.user "
+                + "where user.user_name='" + mUser.getUserName() + "';";
+
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);
@@ -78,22 +89,22 @@ public class DBHelper {
             status = 2;
             Logger.getLogger(DBHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return status;
     }
-    
+
     /*
     *status of device:
     *    0: not add yet
     *    1: existed
     *    2: error database
-    */
+     */
     public int checkDevice() {
         int status = 0;
         Statement statement;
         ResultSet resultSet;
-        String query = "SELECT * FROM `"+database+"`.device "
-                + "where device.device_imei='"+mDevice.getDeviceIMEI()+"';";
+        String query = "SELECT * FROM `" + mSchemaDatabase + "`.device "
+                + "where device.device_imei='" + mDevice.getDeviceIMEI() + "';";
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);
@@ -106,14 +117,14 @@ public class DBHelper {
         }
         return status;
     }
-    
+
     public int addData() {
         int status = 0;
-        if(checkDevice()==0) {
+        if (checkDevice() == 0) {
             //device is not added yet, add device
-            String query = "INSERT INTO `"+database+"`.`device` "
+            String query = "INSERT INTO `" + mSchemaDatabase + "`.`device` "
                     + "(`device_imei`, `device_name`, `user_id`) "
-                    + "VALUES ('"+mDevice.getDeviceIMEI()+"', '"+mDevice.getDeviceName()+"', '"+mUser.getUser_id()+"');";
+                    + "VALUES ('" + mDevice.getDeviceIMEI() + "', '" + mDevice.getDeviceName() + "', '" + mUser.getUser_id() + "');";
             try {
                 Statement statement = connection.createStatement();
                 statement.execute(query);
@@ -121,12 +132,12 @@ public class DBHelper {
                 Logger.getLogger(DBHelper.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        String query = "INSERT INTO `"+database+"`.`data` "
+        String query = "INSERT INTO `" + mSchemaDatabase + "`.`data` "
                 + "(`data_humid`, `data_temp`, `data_time`, `data_coordi`, "
                 + "`data_pin`, `data_pressure`, `device_imei`) "
-                + "VALUES ('"+mData.getHumidity()+"', '"+mData.getTemperature()+"', '"
-                + ""+mData.getTime()+"', '"+mData.getCoordinate()+"', "
-                + "'"+mData.getPin()+"', '"+mData.getPressure()+"', '"+mDevice.getDeviceIMEI()+"');";
+                + "VALUES ('" + mData.getHumidity() + "', '" + mData.getTemperature() + "', '"
+                + "" + mData.getTime() + "', '" + mData.getCoordinate() + "', "
+                + "'" + mData.getPin() + "', '" + mData.getPressure() + "', '" + mDevice.getDeviceIMEI() + "');";
         try {
             Statement statement = connection.createStatement();
             statement.execute(query);
@@ -134,7 +145,7 @@ public class DBHelper {
         } catch (SQLException ex) {
             Logger.getLogger(DBHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return status;
     }
 
@@ -161,7 +172,7 @@ public class DBHelper {
     public void setmData(Data mData) {
         this.mData = mData;
     }
-    
+
     public void finish() {
         try {
             connection.close();
