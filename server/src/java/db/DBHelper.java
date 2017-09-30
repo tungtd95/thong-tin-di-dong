@@ -26,14 +26,19 @@ public class DBHelper {
     Device mDevice;
     Data mData;
     
+    String host = "sql12.freemysqlhosting.net";
+    String database = "sql12197053";
+    String user = "sql12197053";
+    String password = "WrXjqV3NeJ";
+    String port = "3306";
     /*
     * create connection to database
     */
     public DBHelper() {
         try { 
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:"
-                    + "3307/thong-tin-di-dong?useSSL=false", "root", "Javafirst"); 
+            connection = DriverManager.getConnection("jdbc:mysql://"+host+":"
+                    + ""+port+"/"+database+"?useSSL=false", user, password ); 
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DBHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -52,7 +57,7 @@ public class DBHelper {
         Statement statement;
         ResultSet resultSet;
         
-        String query = "SELECT * FROM `thong-tin-di-dong`.user "
+        String query = "SELECT * FROM `"+database+"`.user "
                 + "where user.user_name='"+mUser.getUserName()+"';";
         
         try {
@@ -87,7 +92,7 @@ public class DBHelper {
         int status = 0;
         Statement statement;
         ResultSet resultSet;
-        String query = "SELECT * FROM `thong-tin-di-dong`.device "
+        String query = "SELECT * FROM `"+database+"`.device "
                 + "where device.device_imei='"+mDevice.getDeviceIMEI()+"';";
         try {
             statement = connection.createStatement();
@@ -106,7 +111,7 @@ public class DBHelper {
         int status = 0;
         if(checkDevice()==0) {
             //device is not added yet, add device
-            String query = "INSERT INTO `thong-tin-di-dong`.`device` "
+            String query = "INSERT INTO `"+database+"`.`device` "
                     + "(`device_imei`, `device_name`, `user_id`) "
                     + "VALUES ('"+mDevice.getDeviceIMEI()+"', '"+mDevice.getDeviceName()+"', '"+mUser.getUser_id()+"');";
             try {
@@ -116,7 +121,7 @@ public class DBHelper {
                 Logger.getLogger(DBHelper.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        String query = "INSERT INTO `thong-tin-di-dong`.`data` "
+        String query = "INSERT INTO `"+database+"`.`data` "
                 + "(`data_humid`, `data_temp`, `data_time`, `data_coordi`, "
                 + "`data_pin`, `data_pressure`, `device_imei`) "
                 + "VALUES ('"+mData.getHumidity()+"', '"+mData.getTemperature()+"', '"
