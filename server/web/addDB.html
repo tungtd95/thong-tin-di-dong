@@ -12,10 +12,20 @@ and open the template in the editor.
         <link rel="stylesheet" href="form.css">
         <link rel="stylesheet" href="common.css">
         <script src="addDB.js"></script>
+        <script src="js/jquery-3.2.1.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function (event) {
+                document.getElementById("get").addEventListener("click", function (event) {
+                    jQuery.get("http://localhost:8080/server/jqueryTest", function (data, status) {
+                        document.getElementById("result").textContent = data;
+                    });
+                });
+            });
+        </script>
     </head>
     <body>
         <a href="index.html"><h1>Back to home</h1></a>
-        <a href="addDB.html"><h1>Re-generate</h1></a>
+        <a href="addDB.html" id="test"><h1>Re-generate</h1></a>
         <form action="add" method="post">
             <label>User Name:</label> <input type="text" id="userName" name="userName" value="Tung">
             <label>Password:</label> <input type="password" id="userPassword" name="userPassword" value="123">
@@ -29,5 +39,9 @@ and open the template in the editor.
             <label>Pressure:</label> <input type="number" id="pressure" name="pressure" value="1009">
             <label><input type="submit" name="submit" id="submit" value="Send"></label>
         </form>
+        <div>
+            <p id="result"></p>
+            <button value="get data" id="get" name="get">Get Data From Server</button>
+        </div>
     </body>
 </html>

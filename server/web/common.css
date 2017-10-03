@@ -15,3 +15,14 @@ a:link, a:visited {
 a:hover, a:active {
     background-color: #00ff00;
 }
+
+div {
+    margin-left: 70%;
+}
+
+p, button {
+    width: 200px;
+    height: 30px;
+    font-family: monospace;
+    font-size: large;
+}
