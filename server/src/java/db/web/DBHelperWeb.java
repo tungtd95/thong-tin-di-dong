@@ -46,4 +46,16 @@ public class DBHelperWeb extends DBHelperDevice{
         return status;
     }
     
+    public void createUser() {
+        String query = "INSERT INTO `"+mSchemaDatabase+"`.`user` "
+                + "(`user_email`, `user_password`, `user_name`) "
+                + "VALUES ('"+mUser.getEmail()+"', '"+mUser.getPassword()+"', '"+mUser.getUserName()+"');";
+        try {
+            Statement statement = connection.createStatement();
+            statement.execute(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(DBHelperWeb.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 }

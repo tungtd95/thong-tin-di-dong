@@ -65,7 +65,7 @@ public abstract class DBC {
         ResultSet resultSet;
 
         String query = "SELECT * FROM `" + mSchemaDatabase + "`.user "
-                + "where user.user_name='" + mUser.getUserName() + "';";
+                + "where user.user_email='" + mUser.getEmail() + "';";
 
         try {
             statement = connection.createStatement();
@@ -74,7 +74,6 @@ public abstract class DBC {
                 String password = resultSet.getString("user_password");
                 if (mUser.getPassword().equals(password)) {
                     status = 1;
-                    mUser.setUser_id(resultSet.getInt("user_id"));
                 } else {
                     status = 0;
                 }

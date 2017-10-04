@@ -92,6 +92,7 @@ public class LogIn extends HttpServlet {
                     + "            Password: <input type=\"password\" name=\"password\"> <br>\n"
                     + "            <input type=\"submit\" value=\"Log In\">\n"
                     + "        </form>\n"
+                    + "<a href=\"SignIn\">Sign In</a>"
                     + "    </body>\n"
                     + "</html>");
         } catch (IOException ex) {

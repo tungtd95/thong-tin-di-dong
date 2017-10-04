@@ -31,10 +31,10 @@ public class add extends HttpServlet {
         int user_status;
         int data_status = -1;
         
-        String userName = request.getParameter("userName");
+        String userEmail = request.getParameter("userEmail");
         String userPassword = request.getParameter("userPassword");
         User user = new User();
-        user.setUserName(userName);
+        user.setEmail(userEmail);
         user.setPassword(userPassword);
         dbHelper.setmUser(user);
         
@@ -68,11 +68,16 @@ public class add extends HttpServlet {
         PrintWriter echo;
         try {
             echo = response.getWriter();
-            String content = "{\"user status\":" + user_status+","
-                    + "\"data status\":"+data_status+"}";
+            String content = "-1";
+            if (user_status == 1 && data_status==1) {
+                content = "1";
+            }
+//            String content = "{\"user status\":" + user_status+","
+//                    + "\"data status\":"+data_status+"}";
             echo.println(content);
         } catch (IOException ex) {
             Logger.getLogger(add.class.getName()).log(Level.SEVERE, null, ex);
         }
+        dbHelper.finish();
     }
 }

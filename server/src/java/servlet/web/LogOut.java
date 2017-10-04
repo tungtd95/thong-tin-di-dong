@@ -7,8 +7,6 @@ package servlet.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,52 +18,57 @@ import servlet.MySession;
  *
  * @author tungt
  */
-@WebServlet(name = "Diagram", urlPatterns = {"/Diagram"})
-public class Diagram extends HttpServlet {
-    
+@WebServlet(name = "LogOut", urlPatterns = {"/LogOut"})
+public class LogOut extends HttpServlet {
+
     HttpServletRequest mRequest;
     HttpServletResponse mResponse;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        mRequest = request;
-        mResponse = response;
         MySession mySession = new MySession(request);
-        if (mySession.check()) {
-            loadPage();
-        } else {
-            gotoLogIn();
-        }
+        mySession.clearSession();
+        //go to log in page
+        response.sendRedirect(request.getContextPath() + "/LogIn");
     }
 
-    public void loadPage() {
-        //load html here
-        PrintWriter echo;
-        try {
-            echo = mResponse.getWriter();
-            echo.println("<a href=\"LogOut\">Log out</a>");
-        } catch (IOException ex) {
-            Logger.getLogger(Diagram.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public void gotoLogIn() {
-        try {
-            mResponse.sendRedirect(mRequest.getContextPath() + "/LogIn");
-        } catch (IOException ex) {
-            Logger.getLogger(LogIn.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
 }

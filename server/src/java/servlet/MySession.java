@@ -38,4 +38,7 @@ public class MySession {
     public void addSession() {
         mRequest.getSession().setAttribute(ulti.SessionUlti.NAME, ulti.SessionUlti.STATUS_OK);
     }
+    public void clearSession() {
+        mRequest.getSession().removeAttribute(ulti.SessionUlti.NAME);
+    }
 }

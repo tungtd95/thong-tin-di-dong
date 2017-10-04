@@ -16,7 +16,7 @@ and open the template in the editor.
         <script>
             document.addEventListener("DOMContentLoaded", function (event) {
                 document.getElementById("get").addEventListener("click", function (event) {
-                    jQuery.get("http://localhost:8080/server/jqueryTest", function (data, status) {
+                    jQuery.get("http://192.168.7.183:8080/server/jqueryTest", function (data, status) {
                         document.getElementById("result").textContent = data;
                     });
                 });
@@ -27,7 +27,7 @@ and open the template in the editor.
         <a href="index.html"><h1>Back to home</h1></a>
         <a href="addDB.html" id="test"><h1>Re-generate</h1></a>
         <form action="add" method="post">
-            <label>User Name:</label> <input type="text" id="userName" name="userName" value="Tung">
+            <label>User Email:</label> <input type="text" id="userEmail" name="userEmail" value="tungtd95@gmail.com">
             <label>Password:</label> <input type="password" id="userPassword" name="userPassword" value="123">
             <label>Device IMEI:</label> <input type="text" id="deviceIMEI" name="deviceIMEI" value="863128037003154">
             <label>Device Name:</label> <input type="text" id="deviceName" name="deviceName" value="CAM-L21">
