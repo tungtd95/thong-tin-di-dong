@@ -74,7 +74,7 @@ public class add extends HttpServlet {
             }
 //            String content = "{\"user status\":" + user_status+","
 //                    + "\"data status\":"+data_status+"}";
-            echo.println(content);
+            echo.print(content);
         } catch (IOException ex) {
             Logger.getLogger(add.class.getName()).log(Level.SEVERE, null, ex);
         }
