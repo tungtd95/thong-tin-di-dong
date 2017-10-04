@@ -16,10 +16,10 @@ import ulti.SessionUlti;
  *
  * @author tungt
  */
-public class SessionChecker {
+public class MySession {
     HttpServletRequest mRequest;
     
-    public SessionChecker(HttpServletRequest request) {
+    public MySession(HttpServletRequest request) {
         this.mRequest = request;
     }
     public boolean check() {
@@ -34,5 +34,8 @@ public class SessionChecker {
             }
         }
         return status;
+    }
+    public void addSession() {
+        mRequest.getSession().setAttribute(ulti.SessionUlti.NAME, ulti.SessionUlti.STATUS_OK);
     }
 }

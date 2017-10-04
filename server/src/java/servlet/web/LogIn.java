@@ -5,13 +5,19 @@
  */
 package servlet.web;
 
+import db.web.DBHelperWeb;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.User;
+import servlet.MySession;
+import ulti.Echo;
 
 /**
  *
@@ -20,69 +26,89 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "LogIn", urlPatterns = {"/LogIn"})
 public class LogIn extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    HttpServletRequest mRequest;
+    HttpServletResponse mResponse;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet LogIn</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet LogIn at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        mRequest = request;
+        mResponse = response;
+        MySession mySession = new MySession(request);
+        if (mySession.check()) {
+            gotoDiagram();
+            return;
+        }
+        String email = (String) request.getParameter("email");
+        if (email == null || email.length() == 0) {
+            //load form and return
+            Echo.print("11111111111111111111111");
+            loadForm();
+            return;
+        }
+        String password = (String) request.getParameter("password");
+        if (password == null || password.length() == 0) {
+            //load form and return
+            Echo.print("222222222222222222222222");
+            loadForm();
+            return;
+        }
+        User user = new User();
+        user.setEmail(email.toLowerCase());
+        user.setPassword(password);
+        DBHelperWeb dbHelper = new DBHelperWeb();
+        dbHelper.setmUser(user);
+        if (dbHelper.checkLogIn()) {
+            //add session and go to diagram
+            mySession.addSession();
+            gotoDiagram();
+        } else {
+            //load form and return
+            loadForm();
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    private void gotoDiagram() {
+        try {
+            mResponse.sendRedirect(mRequest.getContextPath() + "/Diagram");
+        } catch (IOException ex) {
+            Logger.getLogger(LogIn.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    private void loadForm() {
+        PrintWriter echo;
+        try {
+            echo = mResponse.getWriter();
+            echo.println("<!DOCTYPE html>\n"
+                    + "<html>\n"
+                    + "    <head>\n"
+                    + "        <title>Log in</title>\n"
+                    + "        <meta charset=\"UTF-8\">\n"
+                    + "        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
+                    + "    </head>\n"
+                    + "    <body>\n"
+                    + "        <form action=\"LogIn\" method=\"post\">\n"
+                    + "            Email: <input type=\"email\" name=\"email\"> <br>\n"
+                    + "            Password: <input type=\"password\" name=\"password\"> <br>\n"
+                    + "            <input type=\"submit\" value=\"Log In\">\n"
+                    + "        </form>\n"
+                    + "    </body>\n"
+                    + "</html>");
+        } catch (IOException ex) {
+            Logger.getLogger(LogIn.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        processRequest(req, resp);
+    }
 
 }

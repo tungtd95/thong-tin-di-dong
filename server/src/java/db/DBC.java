@@ -40,6 +40,7 @@ public abstract class DBC {
     private final String mPasswordDatabase = "Javafirst";
     private final String mPortDatabase = "3307";
     
+    
     public void getConnection() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -87,6 +88,7 @@ public abstract class DBC {
 
         return status;
     }
+    
 
     public User getmUser() {
         return mUser;

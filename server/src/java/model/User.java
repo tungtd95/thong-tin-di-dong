@@ -12,10 +12,21 @@ package model;
 public class User {
     String userName;
     String password;
+    String email;
     int user_id;
     public User() {
         userName = "";
         password = "";
+        email = "";
+        user_id = -1;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
     public void setUserName(String userName) {
         this.userName = userName;
