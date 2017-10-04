@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package main;
+package servlet.device;
 
-import db.DBHelper;
+import db.device.DBHelperDevice;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -27,7 +27,7 @@ public class add extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response){
-        DBHelper dbHelper = new DBHelper();
+        DBHelperDevice dbHelper = new DBHelperDevice();
         int user_status;
         int data_status = -1;
         
