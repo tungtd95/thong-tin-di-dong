@@ -1,4 +1,6 @@
-﻿-----------------------------Nội dung-------------------------------------
+# Bài tập lớn thông tin di động
+
+-----------------------------Nội dung-------------------------------------
 Bài tập lớn thông tin di động kỳ 20171 nhóm 5
 - client: C# (Mạnh thực hiện)
 - server: Java EE (Tùng thực hiện) (cơ bản hoàn thành)
