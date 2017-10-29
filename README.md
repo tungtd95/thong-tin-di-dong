@@ -1,4 +1,4 @@
-# Bài tập lớn thông tin di động
+# Bài tập lớn thông tin di động (Nhóm 5 - 20171)
 
 -----------------------------Nội dung-------------------------------------
 - client: C# (Mạnh thực hiện)
