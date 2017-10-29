@@ -1,7 +1,6 @@
 # Bài tập lớn thông tin di động
 
 -----------------------------Nội dung-------------------------------------
-Bài tập lớn thông tin di động kỳ 20171 nhóm 5
 - client: C# (Mạnh thực hiện)
 - server: Java EE (Tùng thực hiện) (cơ bản hoàn thành)
 - database: MySQL (Mạnh, Tùng, Đạt thực hiện) (cơ bản hoàn thành)
@@ -9,7 +8,6 @@ Bài tập lớn thông tin di động kỳ 20171 nhóm 5
 - viết báo cáo và slide: 2 người làm ít việc nhất trong các nhiệm vụ trên sẽ làm (hạn cuối 30/10)
 
 -----------------------------Chức năng------------------------------------
-Yêu cầu chức năng:
 - client: tạo dữ liệu random để gửi về server
 - server: + nhận dữ liệu người dùng tải lên
           + xác nhận tài khoản
