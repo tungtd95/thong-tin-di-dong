@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+
+<head>
+    <title>Add data</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/form.css">
+    <link rel="stylesheet" href="css/common.css">
+    <script src="js/addDB.js" type="text/javascript"></script>
+    <script src="js/jquery-3.2.1.js"></script>
+    <script>
+        //global variable
+        var host = "http://192.168.68.102";
+        var num_loop = 10;
+
+        document.addEventListener("DOMContentLoaded", function (event) {
+            document.getElementById("get").addEventListener("click", function (event) {
+                var obj = []
+
+                var arr = [8407892043, 7407892043, 1407892043, 5407892043,
+                    6407892043, 3407892043, 44407892043, 9407892043, 123492834412, 182019283412, 3821392803, 0234125214];
+                var arr2 = [1, 2, 22, 33, 44, 55, 21, 90, 99, 82, 67, 54, 89];
+                var lat = [21.000788, 21.001893, 21.005775, 21.563305, 22.765713];
+                var lng = [105.849608, 105.845056, 105.838349, 105.816246, 104.871313];
+                
+                var milliseconds = 0;
+
+                for (var i = 0; i < num_loop; i++) {
+
+                    var milliseconds_current = milliseconds + 600000*i;
+                    var time = new Date(milliseconds_current);   
+                    var hour = time.getHours();
+                    var minute = time.getMinutes();
+                    var second = time.getSeconds();
+                    var date = time.getDate();
+                    var month = time.getMonth() + 1;
+                    var year = time.getFullYear();  
+
+                    for (var index=0; index< 5; index++) {
+                        var deviceIMEI = arr[index];
+                        var deviceName = "CAM-L" + arr2[index];
+                        var humid = Math.floor(Math.random() * 100 + 1);
+                        var temp_base = 0;
+                        if (month == 1 || month == 2 || month == 3 || month == 4) {
+                            temp_base = 15;
+                        } else if (month == 5 || month == 6 || month == 7 || month == 8) {
+                            temp_base = 30;
+                        } else {
+                            temp_base = 10;
+                        }
+                        var temp = temp_base + Math.floor(Math.random() * 3 + 1);
+                        var pin = Math.floor(Math.random() * 100 + 1);
+                        var pressure = Math.floor(Math.random() * 1000 + 1);
+                        var coord = lat[index] + " " + lng[index];
+                        var userEmail = document.getElementById("userEmail").value;
+                        var userPassword = document.getElementById("userPassword").value;
+
+
+                        document.getElementById("time").value = hour+":"+minute+":"+second+"      "+date+"-"+month+"-"+year;
+                        document.getElementById("deviceIMEI").value = deviceIMEI;
+                        document.getElementById("deviceName").value = deviceName;
+                        document.getElementById("humid").value = humid;
+                        document.getElementById("temp").value = temp;
+                        document.getElementById("pin").value = pin;
+                        document.getElementById("pressure").value = pressure;
+                        document.getElementById("coord").value = coord;
+
+                        $.post( host + "/ttdd/add.php",
+                            {
+                              userEmail: userEmail,
+                              userPassword: userPassword,
+                              deviceIMEI: deviceIMEI,
+                              deviceName: deviceName,
+                              humid: humid,
+                              temp: temp,
+                              hour: hour,
+                              minute: minute,
+                              second: second,
+                              date: date,
+                              month: month,
+                              year : year, 
+                              coord: coord,
+                              pin: pin,
+                              pressure: pressure,
+                              milliseconds_current: milliseconds_current
+                            },
+                            function(data,status){
+                            });
+                    }
+                    
+
+                }
+                document.getElementById("result").textContent = obj;
+
+                // });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <a href="index.html">
+        <h1>Back to home</h1>
+    </a>
+    <button id="test">Re-generate</button>
+    <script type="text/javascript">
+        document.getElementById("test").addEventListener("click", created);
+        // document.getElementById("result").innerHTML = "Clicked submit";
+        // document.addEventListener("DOMContentLoaded", function(event) { 
+
+        function created() {
+            var time = new Date();
+            var hour = time.getHours();
+            var minute = time.getMinutes();
+            var second = time.getSeconds();
+            var date = time.getDate();
+            var month = time.getMonth() + 1;
+            var year = time.getFullYear();
+            
+            document.getElementById("time").value = hour+":"+minute+":"+second+"      "+date+"-"+month+"-"+year;
+            var arr = [8407892043, 7407892043, 1407892043, 5407892043,
+                6407892043, 3407892043, 44407892043, 9407892043, 123492834412, 182019283412, 3821392803, 0234125214];
+            var arr2 = [1, 2, 22, 33, 44, 55, 21, 90, 99, 82, 67, 54, 89];
+            var index = Math.floor(Math.random() * 10);
+            document.getElementById("deviceIMEI").value = arr[index];
+            var cam = Math.floor(Math.random() * 100 + 1);
+            document.getElementById("deviceName").value = "CAM" + arr2[index];
+            document.getElementById("humid").value = time.getDate();
+            document.getElementById("temp").value = Math.floor(Math.random() * 100 + 1);
+            document.getElementById("pin").value = Math.floor(Math.random() * 100 + 1);
+            document.getElementById("pressure").value = Math.floor(Math.random() * 1000 + 1);
+            document.getElementById("coord").value = Math.random() * 180 + " " + Math.random() * 180;
+        }
+    </script>
+    <form action="add.php" method="post">
+        <label>User Email:</label>
+        <input type="text" id="userEmail" name="userEmail" value="tungtd95@gmail.com">
+        <label>Password:</label>
+        <input type="password" id="userPassword" name="userPassword" value="">
+        <label>Device IMEI:</label>
+        <input type="text" id="deviceIMEI" name="deviceIMEI" value="863128037003154">
+        <label>Device Name:</label>
+        <input type="text" id="deviceName" name="deviceName" value="CAM-L21">
+        <label>Humidity:</label>
+        <input type="number" id="humid" name="humid" value="83">
+        <label>Temperature:</label>
+        <input type="number" id="temp" name="temp" value="20">
+        <label>Pressure:</label>
+        <input type="number" id="pressure" name="pressure" value="1009">
+        <label>Pin:</label>
+        <input type="number" id="pin" name="pin" value="50">
+        <label>Time:</label>
+        <input type="text" id="time" name="time" value=>
+        <label>Coordinate:</label>
+        <input type="text" id="coord" name="coord" value="21.028511 105.804817">
+        <label>
+            <input type="submit" name="submit" id="submit" value="Send">
+        </label>
+    </form>
+    <div>
+        <p id="result"></p>
+        <button value="get data" id="get" name="get">Get Data From Server</button>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+
+
+a:link, a:visited {
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px 20px;
+    margin: 5px;
+    margin-bottom: 20px;
+    text-align: center; 
+    text-decoration: none;
+    display: inline-block;
+    
+}
+
+a:hover, a:active {
+    background-color: #00ff00;
+}
+
+div {
+    margin-left: 70%;
+}
+
+p, button {
+    width: 200px;
+    height: 30px;
+    font-family: monospace;
+    font-size: large;
+}
