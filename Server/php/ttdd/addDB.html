@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
 
 <head>
@@ -12,12 +7,11 @@ and open the template in the editor.
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/form.css">
     <link rel="stylesheet" href="css/common.css">
-    <script src="js/addDB.js" type="text/javascript"></script>
     <script src="js/jquery-3.2.1.js"></script>
     <script>
         //global variable
-        var host = "http://192.168.68.102";
-        var num_loop = 10;
+        var host = "";
+        var num_loop = 100;
 
         document.addEventListener("DOMContentLoaded", function (event) {
             document.getElementById("get").addEventListener("click", function (event) {
@@ -29,7 +23,7 @@ and open the template in the editor.
                 var lat = [21.000788, 21.001893, 21.005775, 21.563305, 22.765713];
                 var lng = [105.849608, 105.845056, 105.838349, 105.816246, 104.871313];
                 
-                var milliseconds = 0;
+                var milliseconds = new Date().getTime();
 
                 for (var i = 0; i < num_loop; i++) {
 
@@ -105,15 +99,9 @@ and open the template in the editor.
 </head>
 
 <body>
-    <a href="index.html">
-        <h1>Back to home</h1>
-    </a>
     <button id="test">Re-generate</button>
     <script type="text/javascript">
         document.getElementById("test").addEventListener("click", created);
-        // document.getElementById("result").innerHTML = "Clicked submit";
-        // document.addEventListener("DOMContentLoaded", function(event) { 
-
         function created() {
             var time = new Date();
             var hour = time.getHours();
@@ -159,13 +147,10 @@ and open the template in the editor.
         <input type="text" id="time" name="time" value=>
         <label>Coordinate:</label>
         <input type="text" id="coord" name="coord" value="21.028511 105.804817">
-        <label>
-            <input type="submit" name="submit" id="submit" value="Send">
-        </label>
     </form>
     <div>
         <p id="result"></p>
-        <button value="get data" id="get" name="get">Get Data From Server</button>
+        <button value="get data" id="get" name="get">Send Data To Server</button>
     </div>
 </body>
 

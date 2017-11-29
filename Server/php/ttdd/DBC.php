@@ -6,7 +6,7 @@
 	$password = "Javafirst";
 	$port = 3307;
 	$dbname	= "thong-tin-di-dong";
-	$serverhost = "http://192.168.68.102";
+	$serverhost = "http://localhost";
 
 	// Create connection
 	$conn = mysqli_connect($servername, $username, $password, $dbname, $port);
